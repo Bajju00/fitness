@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitTrack Pro - Your Personal Fitness Companion</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <div class="logo">
+                <i class="fas fa-dumbbell"></i>
+                <h1>FitTrack Pro</h1>
+            </div>
+            <div class="user-profile">
+                <span id="username">Welcome, User</span>
+                <div class="profile-pic"></div>
+            </div>
+        </header>
+
+        <nav class="sidebar">
+            <ul>
+                <li class="active"><a href="#dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="#workouts"><i class="fas fa-running"></i> Workouts</a></li>
+                <li><a href="#nutrition"><i class="fas fa-utensils"></i> Nutrition</a></li>
+                <li><a href="#progress"><i class="fas fa-chart-line"></i> Progress</a></li>
+                <li><a href="#goals"><i class="fas fa-bullseye"></i> Goals</a></li>
+                <li><a href="#settings"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <section id="dashboard" class="content-section active">
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background-color: #ff6b6b;">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Calories Burned</h3>
+                            <p id="calories-burned">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background-color: #48dbfb;">
+                            <i class="fas fa-walking"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Steps Today</h3>
+                            <p id="steps-today">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background-color: #1dd1a1;">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Workout Time</h3>
+                            <p id="workout-time">0 min</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background-color: #feca57;">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Current Streak</h3>
+                            <p id="current-streak">0 days</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="workout-summary">
+                    <h2>Today's Workout</h2>
+                    <div class="workout-list" id="today-workouts">
+                        <p class="empty-message">No workouts logged today. Add one to get started!</p>
+                    </div>
+                    <button class="btn-primary" id="add-workout-btn">+ Add Workout</button>
+                </div>
+
+                <div class="progress-chart">
+                    <h2>Weekly Progress</h2>
+                    <canvas id="weeklyChart"></canvas>
+                </div>
+            </section>
+
+            <section id="workouts" class="content-section">
+                <div class="section-header">
+                    <h2>Workout Log</h2>
+                    <button class="btn-primary" id="log-workout-btn">Log New Workout</button>
+                </div>
+                
+                <div class="workout-filters">
+                    <select id="workout-type-filter">
+                        <option value="all">All Types</option>
+                        <option value="cardio">Cardio</option>
+                        <option value="strength">Strength</option>
+                        <option value="flexibility">Flexibility</option>
+                    </select>
+                    <input type="date" id="workout-date-filter">
+                </div>
+                
+                <div class="workout-history" id="workout-history">
+                    <!-- Workout entries will be added here -->
+                </div>
+            </section>
+
+            <section id="goals" class="content-section">
+                <div class="section-header">
+                    <h2>Your Fitness Goals</h2>
+                    <button class="btn-primary" id="add-goal-btn">+ Add Goal</button>
+                </div>
+                
+                <div class="goals-container">
+                    <div class="goal-card" id="active-goals">
+                        <h3>Active Goals</h3>
+                        <div class="goals-list">
+                            <!-- Active goals will be added here -->
+                        </div>
+                    </div>
+                    <div class="goal-card" id="completed-goals">
+                        <h3>Completed Goals</h3>
+                        <div class="goals-list">
+                            <!-- Completed goals will be added here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Other sections would be added similarly -->
+        </main>
+    </div>
+
+    <!-- Workout Modal -->
+    <div class="modal" id="workout-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Log Workout</h2>
+            <form id="workout-form">
+                <div class="form-group">
+                    <label for="workout-type">Workout Type</label>
+                    <select id="workout-type" required>
+                        <option value="">Select type</option>
+                        <option value="cardio">Cardio</option>
+                        <option value="strength">Strength Training</option>
+                        <option value="flexibility">Flexibility</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="workout-name">Workout Name</label>
+                    <input type="text" id="workout-name" placeholder="e.g. Morning Run, Yoga Session" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="workout-duration">Duration (minutes)</label>
+                    <input type="number" id="workout-duration" min="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="workout-calories">Calories Burned</label>
+                    <input type="number" id="workout-calories" min="1">
+                </div>
+                
+                <div class="form-group">
+                    <label for="workout-notes">Notes</label>
+                    <textarea id="workout-notes" rows="3"></textarea>
+                </div>
+                
+                <button type="submit" class="btn-primary">Save Workout</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Goal Modal -->
+    <div class="modal" id="goal-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Add New Goal</h2>
+            <form id="goal-form">
+                <div class="form-group">
+                    <label for="goal-title">Goal Title</label>
+                    <input type="text" id="goal-title" placeholder="e.g. Run 5k, Lose 5kg" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="goal-type">Goal Type</label>
+                    <select id="goal-type" required>
+                        <option value="">Select type</option>
+                        <option value="weight">Weight Loss/Gain</option>
+                        <option value="distance">Running/Cycling Distance</option>
+                        <option value="strength">Strength Training</option>
+                        <option value="habit">Habit Formation</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="goal-target">Target</label>
+                    <input type="text" id="goal-target" placeholder="e.g. 5km, 3 times/week" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="goal-deadline">Deadline</label>
+                    <input type="date" id="goal-deadline" required>
+                </div>
+                
+                <button type="submit" class="btn-primary">Save Goal</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
